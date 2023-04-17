@@ -2267,7 +2267,7 @@
 		$lookupQuery = [
 			'historico_vt' => [
 				'VcrIdBarVe' => 'SELECT `barrios`.`VcrIdBarVe`, `barrios`.`VcrBarVer` FROM `barrios` LEFT JOIN `comunas` as comunas1 ON `comunas1`.`VcrIdCom`=`barrios`.`VcrIdCom` ORDER BY 2',
-				'VcrIdCom' => 'SELECT `comunas`.`VcrIdCom`, `comunas`.`VcrIdCom` FROM `comunas` ORDER BY 2',
+				'VcrIdCom' => 'SELECT `comunas`.`VcrIdCom`, `comunas`.`VcrCom` FROM `comunas` ORDER BY 2',
 				'VcrIdCorr' => 'SELECT `corregimientos`.`VcrIdCorr`, `corregimientos`.`VcrCorr` FROM `corregimientos` ORDER BY 2',
 			],
 			'barrios' => [

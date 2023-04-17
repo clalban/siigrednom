@@ -47,7 +47,7 @@
 			'VcrIdCom' => [
 				'parent_table' => 'comunas',
 				'parent_pk_field' => 'VcrIdCom',
-				'parent_caption' => '`comunas`.`VcrIdCom`',
+				'parent_caption' => '`comunas`.`VcrCom`',
 				'parent_from' => '`comunas` ',
 				'filterers' => [],
 				'custom_query' => '',
