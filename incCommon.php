@@ -106,7 +106,7 @@
 
 	function get_sql_fields($table_name) {
 		$sql_fields = [
-			'historico_vt' => "`historico_vt`.`VcrId` as 'VcrId', `historico_vt`.`VcrCodHis` as 'VcrCodHis', `historico_vt`.`VcrDir` as 'VcrDir', IF(    CHAR_LENGTH(`barrios1`.`VcrBarVer`), CONCAT_WS('',   `barrios1`.`VcrBarVer`), '') as 'VcrIdBarVe', IF(    CHAR_LENGTH(`comunas1`.`VcrIdCom`) || CHAR_LENGTH(`comunas1`.`VcrCom`), CONCAT_WS('',   `comunas1`.`VcrIdCom`, '-', `comunas1`.`VcrCom`), '') as 'VcrIdCom', IF(    CHAR_LENGTH(`corregimientos1`.`VcrCorr`), CONCAT_WS('',   `corregimientos1`.`VcrCorr`), '') as 'VcrIdCorr', `historico_vt`.`VcrLon` as 'VcrLon', `historico_vt`.`VcrLat` as 'VcrLat', `historico_vt`.`VcrDirNom` as 'VcrDirNom'",
+			'historico_vt' => "`historico_vt`.`VcrId` as 'VcrId', `historico_vt`.`VcrCodHis` as 'VcrCodHis', `historico_vt`.`VcrDir` as 'VcrDir', IF(    CHAR_LENGTH(`barrios1`.`VcrBarVer`), CONCAT_WS('',   `barrios1`.`VcrBarVer`), '') as 'VcrIdBarVe', IF(    CHAR_LENGTH(`comunas1`.`VcrIdCom`), CONCAT_WS('',   `comunas1`.`VcrIdCom`), '') as 'VcrIdCom', IF(    CHAR_LENGTH(`corregimientos1`.`VcrCorr`), CONCAT_WS('',   `corregimientos1`.`VcrCorr`), '') as 'VcrIdCorr', `historico_vt`.`VcrLon` as 'VcrLon', `historico_vt`.`VcrLat` as 'VcrLat', `historico_vt`.`VcrDirNom` as 'VcrDirNom'",
 			'barrios' => "`barrios`.`VcrIdBarVe` as 'VcrIdBarVe', `barrios`.`VcrBarVer` as 'VcrBarVer', IF(    CHAR_LENGTH(`comunas1`.`VcrCom`), CONCAT_WS('',   `comunas1`.`VcrCom`), '') as 'VcrIdCom'",
 			'comunas' => "`comunas`.`VcrIdCom` as 'VcrIdCom', `comunas`.`VcrCom` as 'VcrCom'",
 			'corregimientos' => "`corregimientos`.`VcrIdCorr` as 'VcrIdCorr', `corregimientos`.`VcrCorr` as 'VcrCorr'",

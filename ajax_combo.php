@@ -47,7 +47,7 @@
 			'VcrIdCom' => [
 				'parent_table' => 'comunas',
 				'parent_pk_field' => 'VcrIdCom',
-				'parent_caption' => 'IF(CHAR_LENGTH(`comunas`.`VcrIdCom`) || CHAR_LENGTH(`comunas`.`VcrCom`), CONCAT_WS(\'\', `comunas`.`VcrIdCom`, \'-\', `comunas`.`VcrCom`), \'\')',
+				'parent_caption' => '`comunas`.`VcrIdCom`',
 				'parent_from' => '`comunas` ',
 				'filterers' => [],
 				'custom_query' => '',
