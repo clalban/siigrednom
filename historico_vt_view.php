@@ -36,8 +36,8 @@
 		4 => '`barrios1`.`VcrBarVer`',
 		5 => '`comunas1`.`VcrCom`',
 		6 => '`corregimientos1`.`VcrCorr`',
-		7 => '`historico_vt`.`VcrLon`',
-		8 => '`historico_vt`.`VcrLat`',
+		7 => 7,
+		8 => 8,
 		9 => 9,
 	];
 
