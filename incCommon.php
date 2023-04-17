@@ -106,7 +106,10 @@
 
 	function get_sql_fields($table_name) {
 		$sql_fields = [
-			'historico_vt' => "`historico_vt`.`VcrId` as 'VcrId', `historico_vt`.`VcrDir` as 'VcrDir', `historico_vt`.`VcrIdBarVe` as 'VcrIdBarVe', `historico_vt`.`VcrIdCom` as 'VcrIdCom', `historico_vt`.`VcrIdCorr` as 'VcrIdCorr', `historico_vt`.`VcrDirNom` as 'VcrDirNom'",
+			'historico_vt' => "`historico_vt`.`VcrId` as 'VcrId', `historico_vt`.`VcrCodHis` as 'VcrCodHis', `historico_vt`.`VcrDir` as 'VcrDir', IF(    CHAR_LENGTH(`barrios1`.`VcrBarVer`), CONCAT_WS('',   `barrios1`.`VcrBarVer`), '') as 'VcrIdBarVe', IF(    CHAR_LENGTH(`comunas1`.`VcrIdCom`) || CHAR_LENGTH(`comunas1`.`VcrCom`), CONCAT_WS('',   `comunas1`.`VcrIdCom`, '-', `comunas1`.`VcrCom`), '') as 'VcrIdCom', IF(    CHAR_LENGTH(`corregimientos1`.`VcrCorr`), CONCAT_WS('',   `corregimientos1`.`VcrCorr`), '') as 'VcrIdCorr', `historico_vt`.`VcrLon` as 'VcrLon', `historico_vt`.`VcrLat` as 'VcrLat', `historico_vt`.`VcrDirNom` as 'VcrDirNom'",
+			'barrios' => "`barrios`.`VcrIdBarVe` as 'VcrIdBarVe', `barrios`.`VcrBarVer` as 'VcrBarVer', IF(    CHAR_LENGTH(`comunas1`.`VcrCom`), CONCAT_WS('',   `comunas1`.`VcrCom`), '') as 'VcrIdCom'",
+			'comunas' => "`comunas`.`VcrIdCom` as 'VcrIdCom', `comunas`.`VcrCom` as 'VcrCom'",
+			'corregimientos' => "`corregimientos`.`VcrIdCorr` as 'VcrIdCorr', `corregimientos`.`VcrCorr` as 'VcrCorr'",
 		];
 
 		if(isset($sql_fields[$table_name])) return $sql_fields[$table_name];
@@ -118,11 +121,17 @@
 
 	function get_sql_from($table_name, $skip_permissions = false, $skip_joins = false, $lower_permissions = false) {
 		$sql_from = [
-			'historico_vt' => "`historico_vt` ",
+			'historico_vt' => "`historico_vt` LEFT JOIN `barrios` as barrios1 ON `barrios1`.`VcrIdBarVe`=`historico_vt`.`VcrIdBarVe` LEFT JOIN `comunas` as comunas1 ON `comunas1`.`VcrIdCom`=`historico_vt`.`VcrIdCom` LEFT JOIN `corregimientos` as corregimientos1 ON `corregimientos1`.`VcrIdCorr`=`historico_vt`.`VcrIdCorr` ",
+			'barrios' => "`barrios` LEFT JOIN `comunas` as comunas1 ON `comunas1`.`VcrIdCom`=`barrios`.`VcrIdCom` ",
+			'comunas' => "`comunas` ",
+			'corregimientos' => "`corregimientos` ",
 		];
 
 		$pkey = [
 			'historico_vt' => 'VcrId',
+			'barrios' => 'VcrIdBarVe',
+			'comunas' => 'VcrIdCom',
+			'corregimientos' => 'VcrIdCorr',
 		];
 
 		if(!isset($sql_from[$table_name])) return false;
@@ -174,11 +183,27 @@
 		$defaults = [
 			'historico_vt' => [
 				'VcrId' => '',
+				'VcrCodHis' => '',
 				'VcrDir' => '',
 				'VcrIdBarVe' => '',
 				'VcrIdCom' => '',
 				'VcrIdCorr' => '',
+				'VcrLon' => '',
+				'VcrLat' => '',
 				'VcrDirNom' => '',
+			],
+			'barrios' => [
+				'VcrIdBarVe' => '',
+				'VcrBarVer' => '',
+				'VcrIdCom' => '',
+			],
+			'comunas' => [
+				'VcrIdCom' => '',
+				'VcrCom' => '',
+			],
+			'corregimientos' => [
+				'VcrIdCorr' => '',
+				'VcrCorr' => '',
 			],
 		];
 

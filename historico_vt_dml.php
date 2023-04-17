@@ -42,6 +42,21 @@ function historico_vt_insert(&$error_message = '') {
 
 	$recID = $data['VcrId'];
 
+	// automatic VcrIdBarVe if passed as filterer
+	if(Request::val('filterer_VcrIdBarVe')) {
+		sql("UPDATE `historico_vt` SET `VcrIdBarVe`='" . makeSafe(Request::val('filterer_VcrIdBarVe')) . "' WHERE `VcrId`='" . makeSafe($recID, false) . "'", $eo);
+	}
+
+	// automatic VcrIdCom if passed as filterer
+	if(Request::val('filterer_VcrIdCom')) {
+		sql("UPDATE `historico_vt` SET `VcrIdCom`='" . makeSafe(Request::val('filterer_VcrIdCom')) . "' WHERE `VcrId`='" . makeSafe($recID, false) . "'", $eo);
+	}
+
+	// automatic VcrIdCorr if passed as filterer
+	if(Request::val('filterer_VcrIdCorr')) {
+		sql("UPDATE `historico_vt` SET `VcrIdCorr`='" . makeSafe(Request::val('filterer_VcrIdCorr')) . "' WHERE `VcrId`='" . makeSafe($recID, false) . "'", $eo);
+	}
+
 	update_calc_fields('historico_vt', $recID, calculated_fields()['historico_vt']);
 
 	// hook: historico_vt_after_insert
@@ -206,11 +221,20 @@ function historico_vt_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1
 		$dvprint = true;
 	}
 
+	$filterer_VcrIdBarVe = Request::val('filterer_VcrIdBarVe');
+	$filterer_VcrIdCom = Request::val('filterer_VcrIdCom');
+	$filterer_VcrIdCorr = Request::val('filterer_VcrIdCorr');
 
 	// populate filterers, starting from children to grand-parents
 
 	// unique random identifier
 	$rnd1 = ($dvprint ? rand(1000000, 9999999) : '');
+	// combobox: VcrIdBarVe
+	$combo_VcrIdBarVe = new DataCombo;
+	// combobox: VcrIdCom
+	$combo_VcrIdCom = new DataCombo;
+	// combobox: VcrIdCorr
+	$combo_VcrIdCorr = new DataCombo;
 
 	if($selected_id) {
 		// mm: check member permissions
@@ -233,13 +257,278 @@ function historico_vt_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1
 		if(!($row = db_fetch_array($res))) {
 			return error_message($Translation['No records found'], 'historico_vt_view.php', false);
 		}
+		$combo_VcrIdBarVe->SelectedData = $row['VcrIdBarVe'];
+		$combo_VcrIdCom->SelectedData = $row['VcrIdCom'];
+		$combo_VcrIdCorr->SelectedData = $row['VcrIdCorr'];
 		$urow = $row; /* unsanitized data */
 		$row = array_map('safe_html', $row);
 	} else {
 		$filterField = Request::val('FilterField');
 		$filterOperator = Request::val('FilterOperator');
 		$filterValue = Request::val('FilterValue');
+		$combo_VcrIdBarVe->SelectedData = $filterer_VcrIdBarVe;
+		$combo_VcrIdCom->SelectedData = $filterer_VcrIdCom;
+		$combo_VcrIdCorr->SelectedData = $filterer_VcrIdCorr;
 	}
+	$combo_VcrIdBarVe->HTML = '<span id="VcrIdBarVe-container' . $rnd1 . '"></span><input type="hidden" name="VcrIdBarVe" id="VcrIdBarVe' . $rnd1 . '" value="' . html_attr($combo_VcrIdBarVe->SelectedData) . '">';
+	$combo_VcrIdBarVe->MatchText = '<span id="VcrIdBarVe-container-readonly' . $rnd1 . '"></span><input type="hidden" name="VcrIdBarVe" id="VcrIdBarVe' . $rnd1 . '" value="' . html_attr($combo_VcrIdBarVe->SelectedData) . '">';
+	$combo_VcrIdCom->HTML = '<span id="VcrIdCom-container' . $rnd1 . '"></span><input type="hidden" name="VcrIdCom" id="VcrIdCom' . $rnd1 . '" value="' . html_attr($combo_VcrIdCom->SelectedData) . '">';
+	$combo_VcrIdCom->MatchText = '<span id="VcrIdCom-container-readonly' . $rnd1 . '"></span><input type="hidden" name="VcrIdCom" id="VcrIdCom' . $rnd1 . '" value="' . html_attr($combo_VcrIdCom->SelectedData) . '">';
+	$combo_VcrIdCorr->HTML = '<span id="VcrIdCorr-container' . $rnd1 . '"></span><input type="hidden" name="VcrIdCorr" id="VcrIdCorr' . $rnd1 . '" value="' . html_attr($combo_VcrIdCorr->SelectedData) . '">';
+	$combo_VcrIdCorr->MatchText = '<span id="VcrIdCorr-container-readonly' . $rnd1 . '"></span><input type="hidden" name="VcrIdCorr" id="VcrIdCorr' . $rnd1 . '" value="' . html_attr($combo_VcrIdCorr->SelectedData) . '">';
+
+	ob_start();
+	?>
+
+	<script>
+		// initial lookup values
+		AppGini.current_VcrIdBarVe__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['VcrIdBarVe'] : htmlspecialchars($filterer_VcrIdBarVe, ENT_QUOTES)); ?>"};
+		AppGini.current_VcrIdCom__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['VcrIdCom'] : htmlspecialchars($filterer_VcrIdCom, ENT_QUOTES)); ?>"};
+		AppGini.current_VcrIdCorr__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['VcrIdCorr'] : htmlspecialchars($filterer_VcrIdCorr, ENT_QUOTES)); ?>"};
+
+		jQuery(function() {
+			setTimeout(function() {
+				if(typeof(VcrIdBarVe_reload__RAND__) == 'function') VcrIdBarVe_reload__RAND__();
+				if(typeof(VcrIdCom_reload__RAND__) == 'function') VcrIdCom_reload__RAND__();
+				if(typeof(VcrIdCorr_reload__RAND__) == 'function') VcrIdCorr_reload__RAND__();
+			}, 50); /* we need to slightly delay client-side execution of the above code to allow AppGini.ajaxCache to work */
+		});
+		function VcrIdBarVe_reload__RAND__() {
+		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint) { ?>
+
+			$j("#VcrIdBarVe-container__RAND__").select2({
+				/* initial default value */
+				initSelection: function(e, c) {
+					$j.ajax({
+						url: 'ajax_combo.php',
+						dataType: 'json',
+						data: { id: AppGini.current_VcrIdBarVe__RAND__.value, t: 'historico_vt', f: 'VcrIdBarVe' },
+						success: function(resp) {
+							c({
+								id: resp.results[0].id,
+								text: resp.results[0].text
+							});
+							$j('[name="VcrIdBarVe"]').val(resp.results[0].id);
+							$j('[id=VcrIdBarVe-container-readonly__RAND__]').html('<span class="match-text" id="VcrIdBarVe-match-text">' + resp.results[0].text + '</span>');
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=barrios_view_parent]').hide(); } else { $j('.btn[id=barrios_view_parent]').show(); }
+
+
+							if(typeof(VcrIdBarVe_update_autofills__RAND__) == 'function') VcrIdBarVe_update_autofills__RAND__();
+						}
+					});
+				},
+				width: '100%',
+				formatNoMatches: function(term) { return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
+				minimumResultsForSearch: 5,
+				loadMorePadding: 200,
+				ajax: {
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					cache: true,
+					data: function(term, page) { return { s: term, p: page, t: 'historico_vt', f: 'VcrIdBarVe' }; },
+					results: function(resp, page) { return resp; }
+				},
+				escapeMarkup: function(str) { return str; }
+			}).on('change', function(e) {
+				AppGini.current_VcrIdBarVe__RAND__.value = e.added.id;
+				AppGini.current_VcrIdBarVe__RAND__.text = e.added.text;
+				$j('[name="VcrIdBarVe"]').val(e.added.id);
+				if(e.added.id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=barrios_view_parent]').hide(); } else { $j('.btn[id=barrios_view_parent]').show(); }
+
+
+				if(typeof(VcrIdBarVe_update_autofills__RAND__) == 'function') VcrIdBarVe_update_autofills__RAND__();
+			});
+
+			if(!$j("#VcrIdBarVe-container__RAND__").length) {
+				$j.ajax({
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					data: { id: AppGini.current_VcrIdBarVe__RAND__.value, t: 'historico_vt', f: 'VcrIdBarVe' },
+					success: function(resp) {
+						$j('[name="VcrIdBarVe"]').val(resp.results[0].id);
+						$j('[id=VcrIdBarVe-container-readonly__RAND__]').html('<span class="match-text" id="VcrIdBarVe-match-text">' + resp.results[0].text + '</span>');
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=barrios_view_parent]').hide(); } else { $j('.btn[id=barrios_view_parent]').show(); }
+
+						if(typeof(VcrIdBarVe_update_autofills__RAND__) == 'function') VcrIdBarVe_update_autofills__RAND__();
+					}
+				});
+			}
+
+		<?php } else { ?>
+
+			$j.ajax({
+				url: 'ajax_combo.php',
+				dataType: 'json',
+				data: { id: AppGini.current_VcrIdBarVe__RAND__.value, t: 'historico_vt', f: 'VcrIdBarVe' },
+				success: function(resp) {
+					$j('[id=VcrIdBarVe-container__RAND__], [id=VcrIdBarVe-container-readonly__RAND__]').html('<span class="match-text" id="VcrIdBarVe-match-text">' + resp.results[0].text + '</span>');
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=barrios_view_parent]').hide(); } else { $j('.btn[id=barrios_view_parent]').show(); }
+
+					if(typeof(VcrIdBarVe_update_autofills__RAND__) == 'function') VcrIdBarVe_update_autofills__RAND__();
+				}
+			});
+		<?php } ?>
+
+		}
+		function VcrIdCom_reload__RAND__() {
+		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint) { ?>
+
+			$j("#VcrIdCom-container__RAND__").select2({
+				/* initial default value */
+				initSelection: function(e, c) {
+					$j.ajax({
+						url: 'ajax_combo.php',
+						dataType: 'json',
+						data: { id: AppGini.current_VcrIdCom__RAND__.value, t: 'historico_vt', f: 'VcrIdCom' },
+						success: function(resp) {
+							c({
+								id: resp.results[0].id,
+								text: resp.results[0].text
+							});
+							$j('[name="VcrIdCom"]').val(resp.results[0].id);
+							$j('[id=VcrIdCom-container-readonly__RAND__]').html('<span class="match-text" id="VcrIdCom-match-text">' + resp.results[0].text + '</span>');
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=comunas_view_parent]').hide(); } else { $j('.btn[id=comunas_view_parent]').show(); }
+
+
+							if(typeof(VcrIdCom_update_autofills__RAND__) == 'function') VcrIdCom_update_autofills__RAND__();
+						}
+					});
+				},
+				width: '100%',
+				formatNoMatches: function(term) { return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
+				minimumResultsForSearch: 5,
+				loadMorePadding: 200,
+				ajax: {
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					cache: true,
+					data: function(term, page) { return { s: term, p: page, t: 'historico_vt', f: 'VcrIdCom' }; },
+					results: function(resp, page) { return resp; }
+				},
+				escapeMarkup: function(str) { return str; }
+			}).on('change', function(e) {
+				AppGini.current_VcrIdCom__RAND__.value = e.added.id;
+				AppGini.current_VcrIdCom__RAND__.text = e.added.text;
+				$j('[name="VcrIdCom"]').val(e.added.id);
+				if(e.added.id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=comunas_view_parent]').hide(); } else { $j('.btn[id=comunas_view_parent]').show(); }
+
+
+				if(typeof(VcrIdCom_update_autofills__RAND__) == 'function') VcrIdCom_update_autofills__RAND__();
+			});
+
+			if(!$j("#VcrIdCom-container__RAND__").length) {
+				$j.ajax({
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					data: { id: AppGini.current_VcrIdCom__RAND__.value, t: 'historico_vt', f: 'VcrIdCom' },
+					success: function(resp) {
+						$j('[name="VcrIdCom"]').val(resp.results[0].id);
+						$j('[id=VcrIdCom-container-readonly__RAND__]').html('<span class="match-text" id="VcrIdCom-match-text">' + resp.results[0].text + '</span>');
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=comunas_view_parent]').hide(); } else { $j('.btn[id=comunas_view_parent]').show(); }
+
+						if(typeof(VcrIdCom_update_autofills__RAND__) == 'function') VcrIdCom_update_autofills__RAND__();
+					}
+				});
+			}
+
+		<?php } else { ?>
+
+			$j.ajax({
+				url: 'ajax_combo.php',
+				dataType: 'json',
+				data: { id: AppGini.current_VcrIdCom__RAND__.value, t: 'historico_vt', f: 'VcrIdCom' },
+				success: function(resp) {
+					$j('[id=VcrIdCom-container__RAND__], [id=VcrIdCom-container-readonly__RAND__]').html('<span class="match-text" id="VcrIdCom-match-text">' + resp.results[0].text + '</span>');
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=comunas_view_parent]').hide(); } else { $j('.btn[id=comunas_view_parent]').show(); }
+
+					if(typeof(VcrIdCom_update_autofills__RAND__) == 'function') VcrIdCom_update_autofills__RAND__();
+				}
+			});
+		<?php } ?>
+
+		}
+		function VcrIdCorr_reload__RAND__() {
+		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint) { ?>
+
+			$j("#VcrIdCorr-container__RAND__").select2({
+				/* initial default value */
+				initSelection: function(e, c) {
+					$j.ajax({
+						url: 'ajax_combo.php',
+						dataType: 'json',
+						data: { id: AppGini.current_VcrIdCorr__RAND__.value, t: 'historico_vt', f: 'VcrIdCorr' },
+						success: function(resp) {
+							c({
+								id: resp.results[0].id,
+								text: resp.results[0].text
+							});
+							$j('[name="VcrIdCorr"]').val(resp.results[0].id);
+							$j('[id=VcrIdCorr-container-readonly__RAND__]').html('<span class="match-text" id="VcrIdCorr-match-text">' + resp.results[0].text + '</span>');
+							if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=corregimientos_view_parent]').hide(); } else { $j('.btn[id=corregimientos_view_parent]').show(); }
+
+
+							if(typeof(VcrIdCorr_update_autofills__RAND__) == 'function') VcrIdCorr_update_autofills__RAND__();
+						}
+					});
+				},
+				width: '100%',
+				formatNoMatches: function(term) { return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
+				minimumResultsForSearch: 5,
+				loadMorePadding: 200,
+				ajax: {
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					cache: true,
+					data: function(term, page) { return { s: term, p: page, t: 'historico_vt', f: 'VcrIdCorr' }; },
+					results: function(resp, page) { return resp; }
+				},
+				escapeMarkup: function(str) { return str; }
+			}).on('change', function(e) {
+				AppGini.current_VcrIdCorr__RAND__.value = e.added.id;
+				AppGini.current_VcrIdCorr__RAND__.text = e.added.text;
+				$j('[name="VcrIdCorr"]').val(e.added.id);
+				if(e.added.id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=corregimientos_view_parent]').hide(); } else { $j('.btn[id=corregimientos_view_parent]').show(); }
+
+
+				if(typeof(VcrIdCorr_update_autofills__RAND__) == 'function') VcrIdCorr_update_autofills__RAND__();
+			});
+
+			if(!$j("#VcrIdCorr-container__RAND__").length) {
+				$j.ajax({
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					data: { id: AppGini.current_VcrIdCorr__RAND__.value, t: 'historico_vt', f: 'VcrIdCorr' },
+					success: function(resp) {
+						$j('[name="VcrIdCorr"]').val(resp.results[0].id);
+						$j('[id=VcrIdCorr-container-readonly__RAND__]').html('<span class="match-text" id="VcrIdCorr-match-text">' + resp.results[0].text + '</span>');
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=corregimientos_view_parent]').hide(); } else { $j('.btn[id=corregimientos_view_parent]').show(); }
+
+						if(typeof(VcrIdCorr_update_autofills__RAND__) == 'function') VcrIdCorr_update_autofills__RAND__();
+					}
+				});
+			}
+
+		<?php } else { ?>
+
+			$j.ajax({
+				url: 'ajax_combo.php',
+				dataType: 'json',
+				data: { id: AppGini.current_VcrIdCorr__RAND__.value, t: 'historico_vt', f: 'VcrIdCorr' },
+				success: function(resp) {
+					$j('[id=VcrIdCorr-container__RAND__], [id=VcrIdCorr-container-readonly__RAND__]').html('<span class="match-text" id="VcrIdCorr-match-text">' + resp.results[0].text + '</span>');
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>') { $j('.btn[id=corregimientos_view_parent]').hide(); } else { $j('.btn[id=corregimientos_view_parent]').show(); }
+
+					if(typeof(VcrIdCorr_update_autofills__RAND__) == 'function') VcrIdCorr_update_autofills__RAND__();
+				}
+			});
+		<?php } ?>
+
+		}
+	</script>
+	<?php
+
+	$lookups = str_replace('__RAND__', $rnd1, ob_get_clean());
+
 
 	// code for template based detail view forms
 
@@ -329,9 +618,18 @@ function historico_vt_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1
 	}
 
 	// process combos
+	$templateCode = str_replace('<%%COMBO(VcrIdBarVe)%%>', $combo_VcrIdBarVe->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(VcrIdBarVe)%%>', $combo_VcrIdBarVe->MatchText, $templateCode);
+	$templateCode = str_replace('<%%URLCOMBOTEXT(VcrIdBarVe)%%>', urlencode($combo_VcrIdBarVe->MatchText), $templateCode);
+	$templateCode = str_replace('<%%COMBO(VcrIdCom)%%>', $combo_VcrIdCom->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(VcrIdCom)%%>', $combo_VcrIdCom->MatchText, $templateCode);
+	$templateCode = str_replace('<%%URLCOMBOTEXT(VcrIdCom)%%>', urlencode($combo_VcrIdCom->MatchText), $templateCode);
+	$templateCode = str_replace('<%%COMBO(VcrIdCorr)%%>', $combo_VcrIdCorr->HTML, $templateCode);
+	$templateCode = str_replace('<%%COMBOTEXT(VcrIdCorr)%%>', $combo_VcrIdCorr->MatchText, $templateCode);
+	$templateCode = str_replace('<%%URLCOMBOTEXT(VcrIdCorr)%%>', urlencode($combo_VcrIdCorr->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => ['parent table name', 'lookup field caption'] */
-	$lookup_fields = [];
+	$lookup_fields = ['VcrIdBarVe' => ['barrios', 'BARRIO:'], 'VcrIdCom' => ['comunas', 'COMUNA:'], 'VcrIdCorr' => ['corregimientos', 'CORREGIMIENTO:'], ];
 	foreach($lookup_fields as $luf => $ptfc) {
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -348,16 +646,22 @@ function historico_vt_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1
 
 	// process images
 	$templateCode = str_replace('<%%UPLOADFILE(VcrId)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(VcrCodHis)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(VcrDir)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(VcrIdBarVe)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(VcrIdCom)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(VcrIdCorr)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(VcrLon)%%>', '', $templateCode);
+	$templateCode = str_replace('<%%UPLOADFILE(VcrLat)%%>', '', $templateCode);
 	$templateCode = str_replace('<%%UPLOADFILE(VcrDirNom)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id) {
-		$templateCode = str_replace('<%%VALUE(VcrId)%%>', safe_html($urow['VcrId']), $templateCode);
+		if( $dvprint) $templateCode = str_replace('<%%VALUE(VcrId)%%>', safe_html($urow['VcrId']), $templateCode);
+		if(!$dvprint) $templateCode = str_replace('<%%VALUE(VcrId)%%>', html_attr($row['VcrId']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(VcrId)%%>', urlencode($urow['VcrId']), $templateCode);
+		$templateCode = str_replace('<%%VALUE(VcrCodHis)%%>', safe_html($urow['VcrCodHis']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(VcrCodHis)%%>', urlencode($urow['VcrCodHis']), $templateCode);
 		$templateCode = str_replace('<%%VALUE(VcrDir)%%>', safe_html($urow['VcrDir']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(VcrDir)%%>', urlencode($urow['VcrDir']), $templateCode);
 		$templateCode = str_replace('<%%VALUE(VcrIdBarVe)%%>', safe_html($urow['VcrIdBarVe']), $templateCode);
@@ -366,12 +670,18 @@ function historico_vt_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1
 		$templateCode = str_replace('<%%URLVALUE(VcrIdCom)%%>', urlencode($urow['VcrIdCom']), $templateCode);
 		$templateCode = str_replace('<%%VALUE(VcrIdCorr)%%>', safe_html($urow['VcrIdCorr']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(VcrIdCorr)%%>', urlencode($urow['VcrIdCorr']), $templateCode);
+		$templateCode = str_replace('<%%VALUE(VcrLon)%%>', safe_html($urow['VcrLon']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(VcrLon)%%>', urlencode($urow['VcrLon']), $templateCode);
+		$templateCode = str_replace('<%%VALUE(VcrLat)%%>', safe_html($urow['VcrLat']), $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(VcrLat)%%>', urlencode($urow['VcrLat']), $templateCode);
 		if( $dvprint) $templateCode = str_replace('<%%VALUE(VcrDirNom)%%>', safe_html($urow['VcrDirNom']), $templateCode);
 		if(!$dvprint) $templateCode = str_replace('<%%VALUE(VcrDirNom)%%>', html_attr($row['VcrDirNom']), $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(VcrDirNom)%%>', urlencode($urow['VcrDirNom']), $templateCode);
 	} else {
 		$templateCode = str_replace('<%%VALUE(VcrId)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(VcrId)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(VcrCodHis)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(VcrCodHis)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(VcrDir)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(VcrDir)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(VcrIdBarVe)%%>', '', $templateCode);
@@ -380,6 +690,10 @@ function historico_vt_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1
 		$templateCode = str_replace('<%%URLVALUE(VcrIdCom)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(VcrIdCorr)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(VcrIdCorr)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(VcrLon)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(VcrLon)%%>', urlencode(''), $templateCode);
+		$templateCode = str_replace('<%%VALUE(VcrLat)%%>', '', $templateCode);
+		$templateCode = str_replace('<%%URLVALUE(VcrLat)%%>', urlencode(''), $templateCode);
 		$templateCode = str_replace('<%%VALUE(VcrDirNom)%%>', '', $templateCode);
 		$templateCode = str_replace('<%%URLVALUE(VcrDirNom)%%>', urlencode(''), $templateCode);
 	}
@@ -422,6 +736,12 @@ function historico_vt_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1
 	$filterField = Request::val('FilterField');
 	$filterOperator = Request::val('FilterOperator');
 	$filterValue = Request::val('FilterValue');
+	if(isset($filterField[1]) && $filterField[1] == '4' && $filterOperator[1] == '<=>')
+		$templateCode.="\n<input type=hidden name=VcrIdBarVe value=\"" . html_attr($filterValue[1]) . "\">\n";
+	if(isset($filterField[1]) && $filterField[1] == '5' && $filterOperator[1] == '<=>')
+		$templateCode.="\n<input type=hidden name=VcrIdCom value=\"" . html_attr($filterValue[1]) . "\">\n";
+	if(isset($filterField[1]) && $filterField[1] == '6' && $filterOperator[1] == '<=>')
+		$templateCode.="\n<input type=hidden name=VcrIdCorr value=\"" . html_attr($filterValue[1]) . "\">\n";
 
 	// don't include blank images in lightbox gallery
 	$templateCode = preg_replace('/blank.gif" data-lightbox=".*?"/', 'blank.gif"', $templateCode);

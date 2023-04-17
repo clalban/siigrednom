@@ -19,55 +19,70 @@
 	// Fields that can be displayed in the table view
 	$x->QueryFieldsTV = [
 		"`historico_vt`.`VcrId`" => "VcrId",
+		"`historico_vt`.`VcrCodHis`" => "VcrCodHis",
 		"`historico_vt`.`VcrDir`" => "VcrDir",
-		"`historico_vt`.`VcrIdBarVe`" => "VcrIdBarVe",
-		"`historico_vt`.`VcrIdCom`" => "VcrIdCom",
-		"`historico_vt`.`VcrIdCorr`" => "VcrIdCorr",
+		"IF(    CHAR_LENGTH(`barrios1`.`VcrBarVer`), CONCAT_WS('',   `barrios1`.`VcrBarVer`), '') /* BARRIO: */" => "VcrIdBarVe",
+		"IF(    CHAR_LENGTH(`comunas1`.`VcrIdCom`) || CHAR_LENGTH(`comunas1`.`VcrCom`), CONCAT_WS('',   `comunas1`.`VcrIdCom`, '-', `comunas1`.`VcrCom`), '') /* COMUNA: */" => "VcrIdCom",
+		"IF(    CHAR_LENGTH(`corregimientos1`.`VcrCorr`), CONCAT_WS('',   `corregimientos1`.`VcrCorr`), '') /* CORREGIMIENTO: */" => "VcrIdCorr",
+		"`historico_vt`.`VcrLon`" => "VcrLon",
+		"`historico_vt`.`VcrLat`" => "VcrLat",
 		"`historico_vt`.`VcrDirNom`" => "VcrDirNom",
 	];
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = [
 		1 => '`historico_vt`.`VcrId`',
-		2 => 2,
+		2 => '`historico_vt`.`VcrCodHis`',
 		3 => 3,
-		4 => 4,
+		4 => '`barrios1`.`VcrBarVer`',
 		5 => 5,
-		6 => 6,
+		6 => '`corregimientos1`.`VcrCorr`',
+		7 => '`historico_vt`.`VcrLon`',
+		8 => '`historico_vt`.`VcrLat`',
+		9 => 9,
 	];
 
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV = [
 		"`historico_vt`.`VcrId`" => "VcrId",
+		"`historico_vt`.`VcrCodHis`" => "VcrCodHis",
 		"`historico_vt`.`VcrDir`" => "VcrDir",
-		"`historico_vt`.`VcrIdBarVe`" => "VcrIdBarVe",
-		"`historico_vt`.`VcrIdCom`" => "VcrIdCom",
-		"`historico_vt`.`VcrIdCorr`" => "VcrIdCorr",
+		"IF(    CHAR_LENGTH(`barrios1`.`VcrBarVer`), CONCAT_WS('',   `barrios1`.`VcrBarVer`), '') /* BARRIO: */" => "VcrIdBarVe",
+		"IF(    CHAR_LENGTH(`comunas1`.`VcrIdCom`) || CHAR_LENGTH(`comunas1`.`VcrCom`), CONCAT_WS('',   `comunas1`.`VcrIdCom`, '-', `comunas1`.`VcrCom`), '') /* COMUNA: */" => "VcrIdCom",
+		"IF(    CHAR_LENGTH(`corregimientos1`.`VcrCorr`), CONCAT_WS('',   `corregimientos1`.`VcrCorr`), '') /* CORREGIMIENTO: */" => "VcrIdCorr",
+		"`historico_vt`.`VcrLon`" => "VcrLon",
+		"`historico_vt`.`VcrLat`" => "VcrLat",
 		"`historico_vt`.`VcrDirNom`" => "VcrDirNom",
 	];
 	// Fields that can be filtered
 	$x->QueryFieldsFilters = [
 		"`historico_vt`.`VcrId`" => "ID HISTORICO ",
+		"`historico_vt`.`VcrCodHis`" => "CONSECUTIVO:",
 		"`historico_vt`.`VcrDir`" => "DIRECCION:",
-		"`historico_vt`.`VcrIdBarVe`" => "BARRIO:",
-		"`historico_vt`.`VcrIdCom`" => "COMUNA:",
-		"`historico_vt`.`VcrIdCorr`" => "CORREGIMIENTO:",
+		"IF(    CHAR_LENGTH(`barrios1`.`VcrBarVer`), CONCAT_WS('',   `barrios1`.`VcrBarVer`), '') /* BARRIO: */" => "BARRIO:",
+		"IF(    CHAR_LENGTH(`comunas1`.`VcrIdCom`) || CHAR_LENGTH(`comunas1`.`VcrCom`), CONCAT_WS('',   `comunas1`.`VcrIdCom`, '-', `comunas1`.`VcrCom`), '') /* COMUNA: */" => "COMUNA:",
+		"IF(    CHAR_LENGTH(`corregimientos1`.`VcrCorr`), CONCAT_WS('',   `corregimientos1`.`VcrCorr`), '') /* CORREGIMIENTO: */" => "CORREGIMIENTO:",
+		"`historico_vt`.`VcrLon`" => "LONGITUD:",
+		"`historico_vt`.`VcrLat`" => "LATITUD:",
 		"`historico_vt`.`VcrDirNom`" => "DIRECCION NOMENCLATURA",
 	];
 
 	// Fields that can be quick searched
 	$x->QueryFieldsQS = [
 		"`historico_vt`.`VcrId`" => "VcrId",
+		"`historico_vt`.`VcrCodHis`" => "VcrCodHis",
 		"`historico_vt`.`VcrDir`" => "VcrDir",
-		"`historico_vt`.`VcrIdBarVe`" => "VcrIdBarVe",
-		"`historico_vt`.`VcrIdCom`" => "VcrIdCom",
-		"`historico_vt`.`VcrIdCorr`" => "VcrIdCorr",
+		"IF(    CHAR_LENGTH(`barrios1`.`VcrBarVer`), CONCAT_WS('',   `barrios1`.`VcrBarVer`), '') /* BARRIO: */" => "VcrIdBarVe",
+		"IF(    CHAR_LENGTH(`comunas1`.`VcrIdCom`) || CHAR_LENGTH(`comunas1`.`VcrCom`), CONCAT_WS('',   `comunas1`.`VcrIdCom`, '-', `comunas1`.`VcrCom`), '') /* COMUNA: */" => "VcrIdCom",
+		"IF(    CHAR_LENGTH(`corregimientos1`.`VcrCorr`), CONCAT_WS('',   `corregimientos1`.`VcrCorr`), '') /* CORREGIMIENTO: */" => "VcrIdCorr",
+		"`historico_vt`.`VcrLon`" => "VcrLon",
+		"`historico_vt`.`VcrLat`" => "VcrLat",
 		"`historico_vt`.`VcrDirNom`" => "VcrDirNom",
 	];
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = [];
+	$x->filterers = ['VcrIdBarVe' => 'BARRIO:', 'VcrIdCom' => 'COMUNA:', 'VcrIdCorr' => 'CORREGIMIENTO:', ];
 
-	$x->QueryFrom = "`historico_vt` ";
+	$x->QueryFrom = "`historico_vt` LEFT JOIN `barrios` as barrios1 ON `barrios1`.`VcrIdBarVe`=`historico_vt`.`VcrIdBarVe` LEFT JOIN `comunas` as comunas1 ON `comunas1`.`VcrIdCom`=`historico_vt`.`VcrIdCom` LEFT JOIN `corregimientos` as corregimientos1 ON `corregimientos1`.`VcrIdCorr`=`historico_vt`.`VcrIdCorr` ";
 	$x->QueryWhere = '';
 	$x->QueryOrder = '';
 
@@ -94,10 +109,10 @@
 	$x->TableIcon = 'table.gif';
 	$x->PrimaryKey = '`historico_vt`.`VcrId`';
 
-	$x->ColWidth = [150, 150, 150, 150, 150, 150, ];
-	$x->ColCaption = ['ID HISTORICO ', 'DIRECCION:', 'BARRIO:', 'COMUNA:', 'CORREGIMIENTO:', 'DIRECCION NOMENCLATURA', ];
-	$x->ColFieldName = ['VcrId', 'VcrDir', 'VcrIdBarVe', 'VcrIdCom', 'VcrIdCorr', 'VcrDirNom', ];
-	$x->ColNumber  = [1, 2, 3, 4, 5, 6, ];
+	$x->ColWidth = [150, 150, 150, 150, 150, 150, 150, 150, ];
+	$x->ColCaption = ['CONSECUTIVO:', 'DIRECCION:', 'BARRIO:', 'COMUNA:', 'CORREGIMIENTO:', 'LONGITUD:', 'LATITUD:', 'DIRECCION NOMENCLATURA', ];
+	$x->ColFieldName = ['VcrCodHis', 'VcrDir', 'VcrIdBarVe', 'VcrIdCom', 'VcrIdCorr', 'VcrLon', 'VcrLat', 'VcrDirNom', ];
+	$x->ColNumber  = [2, 3, 4, 5, 6, 7, 8, 9, ];
 
 	// template paths below are based on the app main directory
 	$x->Template = 'templates/historico_vt_templateTV.html';

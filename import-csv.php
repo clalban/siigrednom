@@ -5,6 +5,22 @@
 	// accept a record as an assoc array, return transformed row ready to insert to table
 	$transformFunctions = [
 		'historico_vt' => function($data, $options = []) {
+			if(isset($data['VcrIdBarVe'])) $data['VcrIdBarVe'] = pkGivenLookupText($data['VcrIdBarVe'], 'historico_vt', 'VcrIdBarVe');
+			if(isset($data['VcrIdCom'])) $data['VcrIdCom'] = pkGivenLookupText($data['VcrIdCom'], 'historico_vt', 'VcrIdCom');
+			if(isset($data['VcrIdCorr'])) $data['VcrIdCorr'] = pkGivenLookupText($data['VcrIdCorr'], 'historico_vt', 'VcrIdCorr');
+
+			return $data;
+		},
+		'barrios' => function($data, $options = []) {
+			if(isset($data['VcrIdCom'])) $data['VcrIdCom'] = pkGivenLookupText($data['VcrIdCom'], 'barrios', 'VcrIdCom');
+
+			return $data;
+		},
+		'comunas' => function($data, $options = []) {
+
+			return $data;
+		},
+		'corregimientos' => function($data, $options = []) {
 
 			return $data;
 		},
@@ -13,6 +29,9 @@
 	// accept a record as an assoc array, return a boolean indicating whether to import or skip record
 	$filterFunctions = [
 		'historico_vt' => function($data, $options = []) { return true; },
+		'barrios' => function($data, $options = []) { return true; },
+		'comunas' => function($data, $options = []) { return true; },
+		'corregimientos' => function($data, $options = []) { return true; },
 	];
 
 	/*

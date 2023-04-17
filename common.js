@@ -347,6 +347,33 @@ function historico_vt_validateData() {
 
 	return !errors;
 }
+function barrios_validateData() {
+	$j('.has-error').removeClass('has-error');
+	var errors = false;
+
+	// check all required fields have values
+	if(!AppGini.Validation.fieldRequired('text', 'VcrIdBarVe', 'CODIGO DEL BARRIO: ')) return false;
+
+	return !errors;
+}
+function comunas_validateData() {
+	$j('.has-error').removeClass('has-error');
+	var errors = false;
+
+	// check all required fields have values
+	if(!AppGini.Validation.fieldRequired('text', 'VcrIdCom', 'CODIGO DE LA COMUNA:')) return false;
+
+	return !errors;
+}
+function corregimientos_validateData() {
+	$j('.has-error').removeClass('has-error');
+	var errors = false;
+
+	// check all required fields have values
+	if(!AppGini.Validation.fieldRequired('text', 'VcrIdCorr', 'CODIGO DEL CORREGIMIENTO')) return false;
+
+	return !errors;
+}
 
 function post(url, params, update, disable, loading, success_callback) {
 	$j.ajax({

@@ -14,11 +14,11 @@
 
 <div class="panel-body">
 	<fieldset class="form-horizontal">
-		<!-- Field: ID HISTORICO  -->
-		<div class="form-group historico_vt-VcrId" style="border-bottom: dotted 1px #DDD;">
-			<label class="col-xs-3 control-label">ID HISTORICO </label>
+		<!-- Field: CONSECUTIVO: -->
+		<div class="form-group historico_vt-VcrCodHis" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">CONSECUTIVO:</label>
 			<div class="col-xs-9">
-				<div class="form-control-static"><%%VALUE(VcrId)%%></div>
+				<div class="form-control-static"><%%VALUE(VcrCodHis)%%></div>
 			</div>
 		</div>
 		<!-- Field: DIRECCION: -->
@@ -32,21 +32,35 @@
 		<div class="form-group historico_vt-VcrIdBarVe" style="border-bottom: dotted 1px #DDD;">
 			<label class="col-xs-3 control-label">BARRIO:</label>
 			<div class="col-xs-9">
-				<div class="form-control-static"><%%VALUE(VcrIdBarVe)%%></div>
+				<div class="form-control-static"><span id="VcrIdBarVe-readonly<%%RND1%%>"><%%COMBOTEXT(VcrIdBarVe)%%></span></div>
 			</div>
 		</div>
 		<!-- Field: COMUNA: -->
 		<div class="form-group historico_vt-VcrIdCom" style="border-bottom: dotted 1px #DDD;">
 			<label class="col-xs-3 control-label">COMUNA:</label>
 			<div class="col-xs-9">
-				<div class="form-control-static"><%%VALUE(VcrIdCom)%%></div>
+				<div class="form-control-static"><span id="VcrIdCom-readonly<%%RND1%%>"><%%COMBOTEXT(VcrIdCom)%%></span></div>
 			</div>
 		</div>
 		<!-- Field: CORREGIMIENTO: -->
 		<div class="form-group historico_vt-VcrIdCorr" style="border-bottom: dotted 1px #DDD;">
 			<label class="col-xs-3 control-label">CORREGIMIENTO:</label>
 			<div class="col-xs-9">
-				<div class="form-control-static"><%%VALUE(VcrIdCorr)%%></div>
+				<div class="form-control-static"><span id="VcrIdCorr-readonly<%%RND1%%>"><%%COMBOTEXT(VcrIdCorr)%%></span></div>
+			</div>
+		</div>
+		<!-- Field: LONGITUD: -->
+		<div class="form-group historico_vt-VcrLon" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">LONGITUD:</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(VcrLon)%%></div>
+			</div>
+		</div>
+		<!-- Field: LATITUD: -->
+		<div class="form-group historico_vt-VcrLat" style="border-bottom: dotted 1px #DDD;">
+			<label class="col-xs-3 control-label">LATITUD:</label>
+			<div class="col-xs-9">
+				<div class="form-control-static"><%%VALUE(VcrLat)%%></div>
 			</div>
 		</div>
 		<!-- Field: DIRECCION NOMENCLATURA -->

@@ -14,11 +14,44 @@
 			CREATE TABLE IF NOT EXISTS `historico_vt` ( 
 				`VcrId` INT NOT NULL,
 				PRIMARY KEY (`VcrId`),
+				`VcrCodHis` INT NULL,
 				`VcrDir` VARCHAR(70) NULL,
 				`VcrIdBarVe` VARCHAR(10) NULL,
 				`VcrIdCom` VARCHAR(12) NULL,
 				`VcrIdCorr` VARCHAR(12) NULL,
+				`VcrLon` DECIMAL(10,5) NULL,
+				`VcrLat` DECIMAL(10,5) NULL,
 				`VcrDirNom` VARCHAR(70) NULL
+			) CHARSET utf8mb4"
+		);
+		setupIndexes('historico_vt', ['VcrIdBarVe','VcrIdCom','VcrIdCorr',]);
+
+		setupTable(
+			'barrios', " 
+			CREATE TABLE IF NOT EXISTS `barrios` ( 
+				`VcrIdBarVe` VARCHAR(10) NOT NULL,
+				PRIMARY KEY (`VcrIdBarVe`),
+				`VcrBarVer` VARCHAR(40) NULL,
+				`VcrIdCom` VARCHAR(12) NULL
+			) CHARSET utf8mb4"
+		);
+		setupIndexes('barrios', ['VcrIdCom',]);
+
+		setupTable(
+			'comunas', " 
+			CREATE TABLE IF NOT EXISTS `comunas` ( 
+				`VcrIdCom` VARCHAR(12) NOT NULL,
+				PRIMARY KEY (`VcrIdCom`),
+				`VcrCom` VARCHAR(20) NULL
+			) CHARSET utf8mb4"
+		);
+
+		setupTable(
+			'corregimientos', " 
+			CREATE TABLE IF NOT EXISTS `corregimientos` ( 
+				`VcrIdCorr` VARCHAR(12) NOT NULL,
+				PRIMARY KEY (`VcrIdCorr`),
+				`VcrCorr` VARCHAR(40) NULL
 			) CHARSET utf8mb4"
 		);
 

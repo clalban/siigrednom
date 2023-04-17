@@ -109,6 +109,27 @@
 					'group' => $tg[0],
 					'homepageShowCount' => 0
 				],
+				'barrios' => [
+					'Caption' => 'Barrios',
+					'Description' => 'Tabla de Barrios de Santiago de Cali',
+					'tableIcon' => 'table.gif',
+					'group' => $tg[0],
+					'homepageShowCount' => 0
+				],
+				'comunas' => [
+					'Caption' => 'Comunas',
+					'Description' => 'Tabla de comunas de Cali',
+					'tableIcon' => 'table.gif',
+					'group' => $tg[0],
+					'homepageShowCount' => 0
+				],
+				'corregimientos' => [
+					'Caption' => 'Corregimientos',
+					'Description' => 'Tabla de corregimientos de Santiago de Cali',
+					'tableIcon' => 'table.gif',
+					'group' => $tg[0],
+					'homepageShowCount' => 0
+				],
 		];
 
 		if($skip_authentication || getLoggedAdmin()) return $all_tables;
@@ -126,6 +147,9 @@
 		$arrTables = [
 			/* 'table_name' => ['table caption', 'homepage description', 'icon', 'table group name'] */   
 			'historico_vt' => ['Historico vt', '', 'table.gif', 'None'],
+			'barrios' => ['Barrios', 'Tabla de Barrios de Santiago de Cali', 'table.gif', 'None'],
+			'comunas' => ['Comunas', 'Tabla de comunas de Cali', 'table.gif', 'None'],
+			'corregimientos' => ['Corregimientos', 'Tabla de corregimientos de Santiago de Cali', 'table.gif', 'None'],
 		];
 		if($skip_authentication || getLoggedAdmin()) return $arrTables;
 
@@ -925,6 +949,13 @@
 							'description' => 'Identificador registro historico de visitas de verificaci&#243;n',
 						],
 					],
+					'VcrCodHis' => [
+						'appgini' => "INT NULL",
+						'info' => [
+							'caption' => 'CONSECUTIVO:',
+							'description' => 'N&#250;mero del consecutivo asignado a la visita de Verificaci&#243;n ',
+						],
+					],
 					'VcrDir' => [
 						'appgini' => "VARCHAR(70) NULL",
 						'info' => [
@@ -953,11 +984,80 @@
 							'description' => '',
 						],
 					],
+					'VcrLon' => [
+						'appgini' => "DECIMAL(10,5) NULL",
+						'info' => [
+							'caption' => 'LONGITUD:',
+							'description' => 'Registrar coordenadas - longitud lo m&#225;s exacto posible en grados decimales donde sucedi&#243; la emergencia.   . Ejemplo:w (longitud) <br>&#8211; 76. (registrar la cantidad de n&#250;meros que apliquen)',
+						],
+					],
+					'VcrLat' => [
+						'appgini' => "DECIMAL(10,5) NULL",
+						'info' => [
+							'caption' => 'LATITUD:',
+							'description' => 'Registrar las coordenadas - latitud lo m&#225;s exacto posible en grados decimales del lugar donde sucedi&#243; la emergencia.   <br>',
+						],
+					],
 					'VcrDirNom' => [
 						'appgini' => "VARCHAR(70) NULL",
 						'info' => [
 							'caption' => 'DIRECCION NOMENCLATURA',
 							'description' => 'Ingrese la direcci&#243;n donde se realiz&#243; la visita teniendo en cuenta la guia de nomenclatura',
+						],
+					],
+				],
+				'barrios' => [
+					'VcrIdBarVe' => [
+						'appgini' => "VARCHAR(10) NOT NULL PRIMARY KEY",
+						'info' => [
+							'caption' => 'CODIGO DEL BARRIO: ',
+							'description' => 'codigo del barrio',
+						],
+					],
+					'VcrBarVer' => [
+						'appgini' => "VARCHAR(40) NULL",
+						'info' => [
+							'caption' => 'NOMBRE DEL BARRIO:',
+							'description' => 'Nombre del barrio ',
+						],
+					],
+					'VcrIdCom' => [
+						'appgini' => "VARCHAR(12) NULL",
+						'info' => [
+							'caption' => 'COMUNA:',
+							'description' => 'Codigo de la comuna',
+						],
+					],
+				],
+				'comunas' => [
+					'VcrIdCom' => [
+						'appgini' => "VARCHAR(12) NOT NULL PRIMARY KEY",
+						'info' => [
+							'caption' => 'CODIGO DE LA COMUNA:',
+							'description' => 'codigo de la comuna',
+						],
+					],
+					'VcrCom' => [
+						'appgini' => "VARCHAR(20) NULL",
+						'info' => [
+							'caption' => 'nombre comuna',
+							'description' => '',
+						],
+					],
+				],
+				'corregimientos' => [
+					'VcrIdCorr' => [
+						'appgini' => "VARCHAR(12) NOT NULL PRIMARY KEY",
+						'info' => [
+							'caption' => 'CODIGO DEL CORREGIMIENTO',
+							'description' => '',
+						],
+					],
+					'VcrCorr' => [
+						'appgini' => "VARCHAR(40) NULL",
+						'info' => [
+							'caption' => 'NOMBRE DEL CORREGIMIENTO',
+							'description' => '',
 						],
 					],
 				],
@@ -1982,6 +2082,14 @@
 		 *             'parent table' => [main lookup fields in child]
 		 */
 		$parents = [
+			'historico_vt' => [
+				'barrios' => ['VcrIdBarVe'],
+				'comunas' => ['VcrIdCom'],
+				'corregimientos' => ['VcrIdCorr'],
+			],
+			'barrios' => [
+				'comunas' => ['VcrIdCom'],
+			],
 		];
 
 		return isset($parents[$table]) ? $parents[$table] : [];
@@ -2008,6 +2116,12 @@
 		 */
 		return [
 			'historico_vt' => [
+			],
+			'barrios' => [
+			],
+			'comunas' => [
+			],
+			'corregimientos' => [
 			],
 		];
 	}
@@ -2151,6 +2265,16 @@
 		*/
 		$lookupQuery = [
 			'historico_vt' => [
+				'VcrIdBarVe' => 'SELECT `barrios`.`VcrIdBarVe`, `barrios`.`VcrBarVer` FROM `barrios` LEFT JOIN `comunas` as comunas1 ON `comunas1`.`VcrIdCom`=`barrios`.`VcrIdCom` ORDER BY 2',
+				'VcrIdCom' => 'SELECT `comunas`.`VcrIdCom`, IF(CHAR_LENGTH(`comunas`.`VcrIdCom`) || CHAR_LENGTH(`comunas`.`VcrCom`), CONCAT_WS(\'\', `comunas`.`VcrIdCom`, \'-\', `comunas`.`VcrCom`), \'\') FROM `comunas` ORDER BY 2',
+				'VcrIdCorr' => 'SELECT `corregimientos`.`VcrIdCorr`, `corregimientos`.`VcrCorr` FROM `corregimientos` ORDER BY 2',
+			],
+			'barrios' => [
+				'VcrIdCom' => 'SELECT `comunas`.`VcrIdCom`, `comunas`.`VcrCom` FROM `comunas` ORDER BY 2',
+			],
+			'comunas' => [
+			],
+			'corregimientos' => [
 			],
 		];
 

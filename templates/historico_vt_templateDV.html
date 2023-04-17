@@ -18,13 +18,13 @@
 		<div class="col-md-8 col-lg-10" id="historico_vt_dv_form">
 			<fieldset class="form-horizontal">
 
-				<!-- Field: ID HISTORICO  -->
-				<div class="form-group historico_vt-VcrId">
+				<!-- Field: CONSECUTIVO: -->
+				<div class="form-group historico_vt-VcrCodHis">
 					<hr class="hidden-md hidden-lg">
-					<label class="control-label col-lg-3">ID HISTORICO  <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#VcrId-description"></i></label>
+					<label class="control-label col-lg-3">CONSECUTIVO: <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#VcrCodHis-description"></i></label>
 					<div class="col-lg-9">
-						<span class="help-block bspacer-xs collapse" id="VcrId-description"><div class="alert alert-info bspacer-xs">Identificador registro historico de visitas de verificaci&#243;n</div></span>
-						<div class="form-control-static" id="VcrId"><%%VALUE(VcrId)%%></div>
+						<span class="help-block bspacer-xs collapse" id="VcrCodHis-description"><div class="alert alert-info bspacer-xs">N&#250;mero del consecutivo asignado a la visita de Verificaci&#243;n </div></span>
+						<div class="form-control-static" id="VcrCodHis"><%%VALUE(VcrCodHis)%%></div>
 					</div>
 				</div>
 
@@ -41,28 +41,57 @@
 				<!-- Field: BARRIO: -->
 				<div class="form-group historico_vt-VcrIdBarVe">
 					<hr class="hidden-md hidden-lg">
-					<label class="control-label col-lg-3">BARRIO: <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#VcrIdBarVe-description"></i></label>
+					<label class="control-label col-lg-3" data-parent_link="view_parent_modal">BARRIO: <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#VcrIdBarVe-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block bspacer-xs collapse" id="VcrIdBarVe-description"><div class="alert alert-info bspacer-xs">Barrio donde se realiz&#243; la visita de verificaci&#243;n</div></span>
-						<div class="form-control-static" id="VcrIdBarVe"><%%VALUE(VcrIdBarVe)%%></div>
+						<div class="form-control-static">
+							<span id="VcrIdBarVe-readonly"><%%COMBOTEXT(VcrIdBarVe)%%></span>
+							<%%PLINK(VcrIdBarVe)%%>
+						</div>
 					</div>
 				</div>
 
 				<!-- Field: COMUNA: -->
 				<div class="form-group historico_vt-VcrIdCom">
 					<hr class="hidden-md hidden-lg">
-					<label class="control-label col-lg-3">COMUNA:</label>
+					<label class="control-label col-lg-3" data-parent_link="view_parent_modal">COMUNA:</label>
 					<div class="col-lg-9">
-						<div class="form-control-static" id="VcrIdCom"><%%VALUE(VcrIdCom)%%></div>
+						<div class="form-control-static">
+							<span id="VcrIdCom-readonly"><%%COMBOTEXT(VcrIdCom)%%></span>
+							<%%PLINK(VcrIdCom)%%>
+						</div>
 					</div>
 				</div>
 
 				<!-- Field: CORREGIMIENTO: -->
 				<div class="form-group historico_vt-VcrIdCorr">
 					<hr class="hidden-md hidden-lg">
-					<label class="control-label col-lg-3">CORREGIMIENTO:</label>
+					<label class="control-label col-lg-3" data-parent_link="view_parent_modal">CORREGIMIENTO:</label>
 					<div class="col-lg-9">
-						<div class="form-control-static" id="VcrIdCorr"><%%VALUE(VcrIdCorr)%%></div>
+						<div class="form-control-static">
+							<span id="VcrIdCorr-readonly"><%%COMBOTEXT(VcrIdCorr)%%></span>
+							<%%PLINK(VcrIdCorr)%%>
+						</div>
+					</div>
+				</div>
+
+				<!-- Field: LONGITUD: -->
+				<div class="form-group historico_vt-VcrLon">
+					<hr class="hidden-md hidden-lg">
+					<label class="control-label col-lg-3">LONGITUD: <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#VcrLon-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block bspacer-xs collapse" id="VcrLon-description"><div class="alert alert-info bspacer-xs">Registrar coordenadas - longitud lo m&#225;s exacto posible en grados decimales donde sucedi&#243; la emergencia.   . Ejemplo:w (longitud) <br>&#8211; 76. (registrar la cantidad de n&#250;meros que apliquen)</div></span>
+						<div class="form-control-static" id="VcrLon"><%%VALUE(VcrLon)%%></div>
+					</div>
+				</div>
+
+				<!-- Field: LATITUD: -->
+				<div class="form-group historico_vt-VcrLat">
+					<hr class="hidden-md hidden-lg">
+					<label class="control-label col-lg-3">LATITUD: <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#VcrLat-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block bspacer-xs collapse" id="VcrLat-description"><div class="alert alert-info bspacer-xs">Registrar las coordenadas - latitud lo m&#225;s exacto posible en grados decimales del lugar donde sucedi&#243; la emergencia.   <br></div></span>
+						<div class="form-control-static" id="VcrLat"><%%VALUE(VcrLat)%%></div>
 					</div>
 				</div>
 

@@ -33,6 +33,56 @@
 	// drop-downs config
 	$lookups = [
 		'historico_vt' => [
+			'VcrIdBarVe' => [
+				'parent_table' => 'barrios',
+				'parent_pk_field' => 'VcrIdBarVe',
+				'parent_caption' => '`barrios`.`VcrBarVer`',
+				'parent_from' => '`barrios` LEFT JOIN `comunas` as comunas1 ON `comunas1`.`VcrIdCom`=`barrios`.`VcrIdCom` ',
+				'filterers' => [],
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false,
+			],
+			'VcrIdCom' => [
+				'parent_table' => 'comunas',
+				'parent_pk_field' => 'VcrIdCom',
+				'parent_caption' => 'IF(CHAR_LENGTH(`comunas`.`VcrIdCom`) || CHAR_LENGTH(`comunas`.`VcrCom`), CONCAT_WS(\'\', `comunas`.`VcrIdCom`, \'-\', `comunas`.`VcrCom`), \'\')',
+				'parent_from' => '`comunas` ',
+				'filterers' => [],
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false,
+			],
+			'VcrIdCorr' => [
+				'parent_table' => 'corregimientos',
+				'parent_pk_field' => 'VcrIdCorr',
+				'parent_caption' => '`corregimientos`.`VcrCorr`',
+				'parent_from' => '`corregimientos` ',
+				'filterers' => [],
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false,
+			],
+		],
+		'barrios' => [
+			'VcrIdCom' => [
+				'parent_table' => 'comunas',
+				'parent_pk_field' => 'VcrIdCom',
+				'parent_caption' => '`comunas`.`VcrCom`',
+				'parent_from' => '`comunas` ',
+				'filterers' => [],
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false,
+			],
+		],
+		'comunas' => [
+		],
+		'corregimientos' => [
 		],
 	];
 

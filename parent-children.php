@@ -8,6 +8,12 @@
 		$pcConfig = [
 			'historico_vt' => [
 			],
+			'barrios' => [
+			],
+			'comunas' => [
+			],
+			'corregimientos' => [
+			],
 		];
 
 	/*************************************/

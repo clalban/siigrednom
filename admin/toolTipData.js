@@ -29,6 +29,60 @@ historico_vt_delete1Tip=["",spacer+"This option allows each member of the group 
 historico_vt_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Historico vt' table."];
 historico_vt_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Historico vt' table."];
 
+// barrios table
+barrios_addTip=["",spacer+"This option allows all members of the group to add records to the 'Barrios' table. A member who adds a record to the table becomes the 'owner' of that record."];
+
+barrios_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Barrios' table."];
+barrios_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Barrios' table."];
+barrios_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Barrios' table."];
+barrios_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Barrios' table."];
+
+barrios_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Barrios' table."];
+barrios_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Barrios' table."];
+barrios_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Barrios' table."];
+barrios_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Barrios' table, regardless of their owner."];
+
+barrios_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Barrios' table."];
+barrios_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Barrios' table."];
+barrios_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Barrios' table."];
+barrios_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Barrios' table."];
+
+// comunas table
+comunas_addTip=["",spacer+"This option allows all members of the group to add records to the 'Comunas' table. A member who adds a record to the table becomes the 'owner' of that record."];
+
+comunas_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Comunas' table."];
+comunas_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Comunas' table."];
+comunas_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Comunas' table."];
+comunas_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Comunas' table."];
+
+comunas_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Comunas' table."];
+comunas_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Comunas' table."];
+comunas_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Comunas' table."];
+comunas_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Comunas' table, regardless of their owner."];
+
+comunas_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Comunas' table."];
+comunas_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Comunas' table."];
+comunas_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Comunas' table."];
+comunas_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Comunas' table."];
+
+// corregimientos table
+corregimientos_addTip=["",spacer+"This option allows all members of the group to add records to the 'Corregimientos' table. A member who adds a record to the table becomes the 'owner' of that record."];
+
+corregimientos_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Corregimientos' table."];
+corregimientos_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Corregimientos' table."];
+corregimientos_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Corregimientos' table."];
+corregimientos_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Corregimientos' table."];
+
+corregimientos_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Corregimientos' table."];
+corregimientos_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Corregimientos' table."];
+corregimientos_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Corregimientos' table."];
+corregimientos_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Corregimientos' table, regardless of their owner."];
+
+corregimientos_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Corregimientos' table."];
+corregimientos_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Corregimientos' table."];
+corregimientos_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Corregimientos' table."];
+corregimientos_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Corregimientos' table."];
+
 /*
 	Style syntax:
 	-------------
