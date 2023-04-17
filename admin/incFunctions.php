@@ -97,7 +97,8 @@
 
 		/* table groups */
 		$tg = [
-			'None'
+			'HISTORICO',
+			'TABLAS'
 		];
 
 		$all_tables = [
@@ -113,21 +114,21 @@
 					'Caption' => 'Barrios',
 					'Description' => 'Tabla de Barrios de Santiago de Cali',
 					'tableIcon' => 'table.gif',
-					'group' => $tg[0],
+					'group' => $tg[1],
 					'homepageShowCount' => 0
 				],
 				'comunas' => [
 					'Caption' => 'Comunas',
 					'Description' => 'Tabla de comunas de Cali',
 					'tableIcon' => 'table.gif',
-					'group' => $tg[0],
+					'group' => $tg[1],
 					'homepageShowCount' => 0
 				],
 				'corregimientos' => [
 					'Caption' => 'Corregimientos',
 					'Description' => 'Tabla de corregimientos de Santiago de Cali',
 					'tableIcon' => 'table.gif',
-					'group' => $tg[0],
+					'group' => $tg[1],
 					'homepageShowCount' => 0
 				],
 		];
@@ -146,10 +147,10 @@
 		$arrAccessTables = [];
 		$arrTables = [
 			/* 'table_name' => ['table caption', 'homepage description', 'icon', 'table group name'] */   
-			'historico_vt' => ['Historico vt', '', 'table.gif', 'None'],
-			'barrios' => ['Barrios', 'Tabla de Barrios de Santiago de Cali', 'table.gif', 'None'],
-			'comunas' => ['Comunas', 'Tabla de comunas de Cali', 'table.gif', 'None'],
-			'corregimientos' => ['Corregimientos', 'Tabla de corregimientos de Santiago de Cali', 'table.gif', 'None'],
+			'historico_vt' => ['Historico vt', '', 'table.gif', 'HISTORICO'],
+			'barrios' => ['Barrios', 'Tabla de Barrios de Santiago de Cali', 'table.gif', 'TABLAS'],
+			'comunas' => ['Comunas', 'Tabla de comunas de Cali', 'table.gif', 'TABLAS'],
+			'corregimientos' => ['Corregimientos', 'Tabla de corregimientos de Santiago de Cali', 'table.gif', 'TABLAS'],
 		];
 		if($skip_authentication || getLoggedAdmin()) return $arrTables;
 
